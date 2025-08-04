@@ -1,5 +1,6 @@
 package com.shoppingorderapi.domain.user;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -7,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,8 +32,13 @@ public class User extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Email
+	@NotBlank
+	@Column(unique = true, nullable = false)
 	private String email;
 
+	@NotBlank
+	@Column(nullable = false)
 	private String password;
 
 	private String address;
@@ -38,6 +46,7 @@ public class User extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 
+	@Column(nullable = false)
 	private Boolean isDeleted = false;
 
 	public User(String email, String password, String address) {
