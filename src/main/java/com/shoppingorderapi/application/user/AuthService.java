@@ -56,7 +56,7 @@ public class AuthService {
 	}
 
 	@Transactional
-	public void SignOut() {
+	public void signOut() {
 		// todo: 블랙 리스트 로직 구현 예정
 	}
 
