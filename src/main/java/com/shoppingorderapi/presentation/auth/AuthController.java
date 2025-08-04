@@ -37,11 +37,13 @@ public class AuthController {
 
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout() {
-		return null;
+		// TODO: 로그아웃 로직 구현 필요
+		return ResponseEntity.noContent().build();
 	}
 
 	@PostMapping("/owners/signup")
 	public ResponseEntity<Void> signUpOwner() {
-		return null;
+		// TODO: 회원가입 - Owner 전용 구현 필요
+		return ResponseEntity.noContent().build();
 	}
 }
