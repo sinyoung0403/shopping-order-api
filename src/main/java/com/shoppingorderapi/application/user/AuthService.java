@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shoppingorderapi.common.exception.CustomException;
+import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.user.User;
 import com.shoppingorderapi.domain.user.UserRepository;
 import com.shoppingorderapi.domain.user.dto.SignInRequestDto;
@@ -23,8 +25,8 @@ public class AuthService {
 	) {
 		userRepository.findByEmail(signUpRequestDto.getEmail())
 			.ifPresent(user -> {
-			throw new RuntimeException("이미 존재하는 이메일입니다.");
-		});
+				throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
+			});
 
 		User user = new User(
 			signUpRequestDto.getEmail(),
@@ -45,11 +47,11 @@ public class AuthService {
 	) {
 		// 1. User Email 일치 여부 확인
 		User findUser = userRepository.findByEmail(signInRequestDto.getEmail())
-			.orElseThrow(() -> new RuntimeException(""));
+			.orElseThrow(() -> new CustomException(ErrorCode.LOGIN_FAILED));
 
 		// 2. pwd 일치 여부 확인 - todo: 추후 Pwd Encoder 예정
 		if (!findUser.getPassword().equals(signInRequestDto.getPassword())) {
-			throw new RuntimeException();
+			throw new CustomException(ErrorCode.LOGIN_FAILED);
 		}
 
 		// todo: 추후 토큰 일치 예정
