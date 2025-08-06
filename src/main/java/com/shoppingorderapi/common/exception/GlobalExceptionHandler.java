@@ -37,8 +37,8 @@ public class GlobalExceptionHandler {
 		return ResponseEntity
 			.status(HttpStatus.INTERNAL_SERVER_ERROR)
 			.body(BaseResponse.error(
-				"서버 내부 오류가 발생했습니다.",
-				"INTERNAL_SERVER_ERROR"
+				ErrorCode.INTERNAL_SERVER_ERROR.getMessage(),
+				ErrorCode.INTERNAL_SERVER_ERROR.getCode()
 			));
 	}
 }
