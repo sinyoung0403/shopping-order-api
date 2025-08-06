@@ -21,6 +21,11 @@ public enum ErrorCode {
 	DUPLICATE_EMAIL("DUPLICATE_EMAIL", "이미 사용 중인 이메일입니다.", HttpStatus.CONFLICT),
 
 	/**
+	 * Product 관련
+	 */
+	DUPLICATE_PRODUCT("DUPLICATE_PRODUCT", "이미 사용 중인 상품명입니다.", HttpStatus.CONFLICT),
+
+	/**
 	 * 기타
 	 */
 	INVALID_INPUT("INVALID_INPUT", "입력값이 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
