@@ -1,4 +1,4 @@
-package com.shoppingorderapi.domain.product.dto;
+package com.shoppingorderapi.domain.product.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

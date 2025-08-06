@@ -1,4 +1,4 @@
-package com.shoppingorderapi.domain.product.dto;
+package com.shoppingorderapi.domain.product.dto.request;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
