@@ -9,7 +9,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -33,11 +32,9 @@ public class User extends BaseTimeEntity {
 	private Long id;
 
 	@Email
-	@NotBlank
 	@Column(unique = true, nullable = false)
 	private String email;
 
-	@NotBlank
 	@Column(nullable = false)
 	private String password;
 
