@@ -2,6 +2,8 @@ package com.shoppingorderapi.common.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.shoppingorderapi.common.response.BaseResponse;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
 	/**
@@ -17,13 +20,13 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(CustomException.class)
 	public ResponseEntity<BaseResponse<Void>> handleCustomException(CustomException ex) {
-		ErrorCode errorCode = ex.getErrorCode();
+		log.error("Unexpected error occurred: ", ex);
 
 		return ResponseEntity
-			.status(errorCode.getStatus())
+			.status(ex.getErrorCode().getStatus())
 			.body(BaseResponse.error(
-				errorCode.getMessage(),
-				errorCode.getCode()
+				ex.getErrorCode().getMessage(),
+				ex.getErrorCode().getCode()
 			));
 	}
 
