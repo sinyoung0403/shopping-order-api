@@ -14,6 +14,8 @@ import com.shoppingorderapi.application.product.ProductService;
 import com.shoppingorderapi.common.response.BaseResponse;
 import com.shoppingorderapi.domain.product.dto.CreateProductRequest;
 import com.shoppingorderapi.domain.product.dto.CreateProductResponse;
+import com.shoppingorderapi.domain.product.dto.request.CreateProductRequestDto;
+import com.shoppingorderapi.domain.product.dto.response.CreateProductResponseDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +30,8 @@ public class ProductController {
 	 * @return 생성된 상품 정보와 함께 201 Created 응답
 	 */
 	@PostMapping("/product")
-	public ResponseEntity<BaseResponse<CreateProductResponse>> createProduct(
-		@Valid @RequestBody CreateProductRequest createProductRequest
+	public ResponseEntity<BaseResponse<CreateProductResponseDto>> createProduct(
+		@Valid @RequestBody CreateProductRequestDto createProductRequest
 	) {
 		return ResponseEntity
 			.status(HttpStatus.CREATED)

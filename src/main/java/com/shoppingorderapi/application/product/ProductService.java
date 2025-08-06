@@ -11,6 +11,8 @@ import com.shoppingorderapi.domain.product.Product;
 import com.shoppingorderapi.domain.product.ProductRepository;
 import com.shoppingorderapi.domain.product.dto.CreateProductRequest;
 import com.shoppingorderapi.domain.product.dto.CreateProductResponse;
+import com.shoppingorderapi.domain.product.dto.request.CreateProductRequestDto;
+import com.shoppingorderapi.domain.product.dto.response.CreateProductResponseDto;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class ProductService {
 	 * @return 생성된 상품의 ID
 	 */
 	@Transactional
-	public CreateProductResponse createProduct(CreateProductRequest createProductRequest) {
+	public CreateProductResponseDto createProduct(CreateProductRequestDto createProductRequest) {
 		// 1. TODO: 유저 여부 확인 - OWNER 확인
 
 		// 2. Product name 중복 여부 확인
@@ -46,7 +48,7 @@ public class ProductService {
 		productRepository.save(product);
 
 		// 5. 응답 반환
-		return CreateProductResponse.of(product.getId());
+		return CreateProductResponseDto.of(product.getId());
 	}
 
 

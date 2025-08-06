@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CreateProductResponse {
+public class CreateProductResponseDto {
 	private Long productId;
 
-	public static CreateProductResponse of(Long productId) {
-		return new CreateProductResponse(productId);
+	public static CreateProductResponseDto of(Long productId) {
+		return new CreateProductResponseDto(productId);
 	}
 }
