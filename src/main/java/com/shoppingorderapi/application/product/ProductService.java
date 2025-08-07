@@ -74,12 +74,11 @@ public class ProductService {
 		Product product = productRepository.findByIdOrElseThrow(productId);
 
 		// 2. 상품명 중복 검사 및 변경
-		if (productRepository.existsByName(updateProductRequestDto.getName())) {
-			throw new CustomException(ErrorCode.DUPLICATE_PRODUCT);
-		}
-
 		if (updateProductRequestDto.getName() != null) {
-			product.updateName(updateProductRequestDto.getName());
+			if (!product.getName().equals(updateProductRequestDto.getName()) &&
+				productRepository.existsByName(updateProductRequestDto.getName())) {
+				throw new CustomException(ErrorCode.DUPLICATE_PRODUCT);
+			}
 		}
 
 		// 3. 가격 변경
