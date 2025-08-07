@@ -71,4 +71,8 @@ public class Product extends BaseTimeEntity {
 	public void updateImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+
+	public void delete() {
+		this.isDeleted = true;
+	}
 }
