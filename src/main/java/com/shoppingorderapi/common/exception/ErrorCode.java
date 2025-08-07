@@ -28,6 +28,7 @@ public enum ErrorCode {
 	/**
 	 * 기타
 	 */
+	NOT_FOUND("NOT_FOUND", "존재하지 않습니다.", HttpStatus.NOT_FOUND),
 	INVALID_INPUT("INVALID_INPUT", "입력값이 유효하지 않습니다.", HttpStatus.BAD_REQUEST),
 	INTERNAL_SERVER_ERROR("INTERNAL_SERVER_ERROR", "서버 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
