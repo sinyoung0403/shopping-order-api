@@ -44,7 +44,7 @@ public class ProductService {
 		Product product = Product.builder()
 			.name(createProductRequest.getName())
 			.price(createProductRequest.getPrice())
-			.stock(createProductRequest.getPrice())
+			.stock(createProductRequest.getStock())
 			.description(createProductRequest.getDescription())
 			.imageUrl(createProductRequest.getImageUrl())
 			.isDeleted(false)
