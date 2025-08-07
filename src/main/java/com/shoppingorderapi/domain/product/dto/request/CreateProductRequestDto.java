@@ -21,6 +21,7 @@ public class CreateProductRequestDto {
 	private int price;
 
 	@NotNull
+	@Positive
 	@Max(10000000)
 	private int stock;
 
