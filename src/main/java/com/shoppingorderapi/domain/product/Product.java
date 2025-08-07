@@ -55,4 +55,20 @@ public class Product extends BaseTimeEntity {
 		this.imageUrl = imageUrl;
 		this.isDeleted = isDeleted;
 	}
+
+	public void updateName(String name) {
+		this.name = name;
+	}
+
+	public void updatetPrice(int price) {
+		this.price = price;
+	}
+
+	public void updateDescription(String description) {
+		this.description = description;
+	}
+
+	public void updateImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 }
