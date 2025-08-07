@@ -14,6 +14,7 @@ import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.product.Product;
 import com.shoppingorderapi.domain.product.ProductRepository;
 import com.shoppingorderapi.domain.product.dto.request.CreateProductRequestDto;
+import com.shoppingorderapi.domain.product.dto.request.UpdateProductRequestDto;
 import com.shoppingorderapi.domain.product.dto.response.CreateProductResponseDto;
 import com.shoppingorderapi.domain.product.dto.response.FindAllProductResponseDto;
 import com.shoppingorderapi.domain.product.dto.response.FindProductResponseDto;
@@ -56,12 +57,44 @@ public class ProductService {
 		return CreateProductResponseDto.of(product.getId());
 	}
 
+	@Transactional(readOnly = true)
 	public FindProductResponseDto getProduct(Long productId) {
 		return productRepository.findProductWithId(productId);
 	}
 
+	@Transactional(readOnly = true)
 	public Page<FindAllProductResponseDto> getAllProduct(int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.asc("createdAt")));
 		return productRepository.findAllProduct(pageable);
+	}
+
+	@Transactional
+	public void updateProduct(Long productId, UpdateProductRequestDto updateProductRequestDto) {
+		// 1. Entity 조회
+		Product product = productRepository.findByIdOrElseThrow(productId);
+
+		// 2. 상품명 중복 검사 및 변경
+		if (productRepository.existsByName(updateProductRequestDto.getName())) {
+			throw new CustomException(ErrorCode.DUPLICATE_PRODUCT);
+		}
+
+		if (updateProductRequestDto.getName() != null) {
+			product.updateName(updateProductRequestDto.getName());
+		}
+
+		// 3. 가격 변경
+		if (updateProductRequestDto.getPrice() != null) {
+			product.updatetPrice(updateProductRequestDto.getPrice());
+		}
+
+		// 4. 설명 변경
+		if (updateProductRequestDto.getDescription() != null) {
+			product.updateDescription(updateProductRequestDto.getDescription());
+		}
+
+		// 5. 이미지 URL 변경
+		if (updateProductRequestDto.getImageUrl() != null) {
+			product.updateImageUrl(updateProductRequestDto.getImageUrl());
+		}
 	}
 }
