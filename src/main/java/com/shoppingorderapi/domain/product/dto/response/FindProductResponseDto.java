@@ -18,16 +18,16 @@ public class FindProductResponseDto {
 
 	private String imageUrl;
 
-	private LocalDateTime created_at;
+	private LocalDateTime createdAt;
 
 	@Builder
 	public FindProductResponseDto(String name, int price, int stock, String description, String imageUrl,
-		LocalDateTime created_at) {
+		LocalDateTime createdAt) {
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
 		this.description = description;
 		this.imageUrl = imageUrl;
-		this.created_at = created_at;
+		this.createdAt = createdAt;
 	}
 }
