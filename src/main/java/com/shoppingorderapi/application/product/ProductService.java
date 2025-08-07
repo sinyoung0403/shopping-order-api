@@ -97,4 +97,12 @@ public class ProductService {
 			product.updateImageUrl(updateProductRequestDto.getImageUrl());
 		}
 	}
+
+	public void deleteProduct(Long productId) {
+		// 1. Entity 조회
+		Product product = productRepository.findByIdOrElseThrow(productId);
+
+		// 2. 삭제
+		product.delete();
+	}
 }
