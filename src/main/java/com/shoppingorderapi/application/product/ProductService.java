@@ -97,6 +97,7 @@ public class ProductService {
 		}
 	}
 
+	@Transactional
 	public void deleteProduct(Long productId) {
 		// 1. Entity 조회
 		Product product = productRepository.findByIdOrElseThrow(productId);
