@@ -41,14 +41,18 @@ public class Product extends BaseTimeEntity {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 
+	@Column(nullable = false)
+	private String imageUrl;
+
 	private Boolean isDeleted = false;
 
 	@Builder
-	public Product(String name, int price, int stock, String description, Boolean isDeleted) {
+	public Product(String name, int price, int stock, String description, String imageUrl, Boolean isDeleted) {
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
 		this.description = description;
+		this.imageUrl = imageUrl;
 		this.isDeleted = isDeleted;
 	}
 }

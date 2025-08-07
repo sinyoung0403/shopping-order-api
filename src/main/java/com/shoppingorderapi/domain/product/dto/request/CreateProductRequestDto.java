@@ -27,4 +27,7 @@ public class CreateProductRequestDto {
 	@NotBlank
 	@Size(min = 1, max = 1000)
 	private String description;
+
+	@NotBlank
+	private String imageUrl;
 }

@@ -31,7 +31,7 @@ public class ProductService {
 		// 1. TODO: 유저 여부 확인 - OWNER 확인
 
 		// 2. Product name 중복 여부 확인
-		if(!productRepository.existsByName(createProductRequest.getName())) {
+		if (!productRepository.existsByName(createProductRequest.getName())) {
 			throw new CustomException(ErrorCode.DUPLICATE_PRODUCT);
 		}
 
@@ -41,6 +41,7 @@ public class ProductService {
 			.price(createProductRequest.getPrice())
 			.stock(createProductRequest.getPrice())
 			.description(createProductRequest.getDescription())
+			.imageUrl(createProductRequest.getImageUrl())
 			.isDeleted(false)
 			.build();
 
