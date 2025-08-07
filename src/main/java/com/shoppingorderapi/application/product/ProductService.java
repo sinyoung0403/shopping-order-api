@@ -83,7 +83,7 @@ public class ProductService {
 
 		// 3. 가격 변경
 		if (updateProductRequestDto.getPrice() != null) {
-			product.updatetPrice(updateProductRequestDto.getPrice());
+			product.updatePrice(updateProductRequestDto.getPrice());
 		}
 
 		// 4. 설명 변경

@@ -60,7 +60,7 @@ public class Product extends BaseTimeEntity {
 		this.name = name;
 	}
 
-	public void updatetPrice(int price) {
+	public void updatePrice(int price) {
 		this.price = price;
 	}
 
