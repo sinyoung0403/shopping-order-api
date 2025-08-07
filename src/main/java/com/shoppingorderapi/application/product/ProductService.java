@@ -2,6 +2,10 @@ package com.shoppingorderapi.application.product;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,10 +13,10 @@ import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.product.Product;
 import com.shoppingorderapi.domain.product.ProductRepository;
-import com.shoppingorderapi.domain.product.dto.CreateProductRequest;
-import com.shoppingorderapi.domain.product.dto.CreateProductResponse;
 import com.shoppingorderapi.domain.product.dto.request.CreateProductRequestDto;
 import com.shoppingorderapi.domain.product.dto.response.CreateProductResponseDto;
+import com.shoppingorderapi.domain.product.dto.response.FindAllProductResponseDto;
+import com.shoppingorderapi.domain.product.dto.response.FindProductResponseDto;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +35,7 @@ public class ProductService {
 		// 1. TODO: 유저 여부 확인 - OWNER 확인
 
 		// 2. Product name 중복 여부 확인
-		if (!productRepository.existsByName(createProductRequest.getName())) {
+		if (productRepository.existsByName(createProductRequest.getName())) {
 			throw new CustomException(ErrorCode.DUPLICATE_PRODUCT);
 		}
 
@@ -52,5 +56,12 @@ public class ProductService {
 		return CreateProductResponseDto.of(product.getId());
 	}
 
+	public FindProductResponseDto getProduct(Long productId) {
+		return productRepository.findProductWithId(productId);
+	}
 
+	public Page<FindAllProductResponseDto> getAllProduct(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.asc("createdAt")));
+		return productRepository.findAllProduct(pageable);
+	}
 }
