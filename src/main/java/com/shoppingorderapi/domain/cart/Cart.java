@@ -15,6 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import com.shoppingorderapi.common.entity.BaseTimeEntity;
+import com.shoppingorderapi.common.exception.CustomException;
+import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.user.User;
 
 /**
@@ -42,6 +44,7 @@ public class Cart extends BaseTimeEntity {
 
 	@Builder
 	public Cart(User user) {
+		if (user == null) throw new CustomException(ErrorCode.INVALID_INPUT);
 		this.user = user;
 	}
 }
