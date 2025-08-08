@@ -25,6 +25,10 @@ public class CartService {
 		// 1. User 존재 여부 확인
 		User user = userRepository.findByIdOrElseThrow(userId);
 
+		if (cartRepository.existsByUser_Id(user.getId())) {
+			throw new CustomException(ErrorCode.INVALID_INPUT);
+		}
+
 		// 2. Cart Entity 생성
 		Cart cart = Cart.builder().user(user).build();
 

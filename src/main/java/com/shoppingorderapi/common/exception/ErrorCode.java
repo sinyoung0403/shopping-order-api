@@ -26,6 +26,11 @@ public enum ErrorCode {
 	DUPLICATE_PRODUCT("DUPLICATE_PRODUCT", "이미 사용 중인 상품명입니다.", HttpStatus.CONFLICT),
 
 	/**
+	 * Cart 관련
+	 */
+	DUPLICATE_CART("DUPLICATE_CART", "이미 장바구니가 존재합니다.", HttpStatus.CONFLICT),
+
+	/**
 	 * 기타
 	 */
 	NOT_FOUND("NOT_FOUND", "존재하지 않습니다.", HttpStatus.NOT_FOUND),

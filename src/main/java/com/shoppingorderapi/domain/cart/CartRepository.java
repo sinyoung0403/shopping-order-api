@@ -7,4 +7,6 @@ import com.shoppingorderapi.common.repository.BaseRepository;
 public interface CartRepository extends BaseRepository<Cart, Long> {
 
 	Optional<Cart> findByUser_Id(Long userId);
+
+	boolean existsByUser_Id(Long userId);
 }
