@@ -39,6 +39,7 @@ public class CartService {
 		// Cart Item 추가 -> DTO 만든 후 다시 수정할 예정
 	}
 
+	@Transactional
 	public void deleteCart(Long userId) {
 		// 1. User 에 맞는 카트 확인
 		Cart cart = cartRepository.findByUser_Id(userId)
