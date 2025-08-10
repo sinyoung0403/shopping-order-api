@@ -79,6 +79,7 @@ public class ProductService {
 				productRepository.existsByName(updateProductRequestDto.getName())) {
 				throw new CustomException(ErrorCode.DUPLICATE_PRODUCT);
 			}
+			product.updateName(updateProductRequestDto.getName());
 		}
 
 		// 3. 가격 변경
