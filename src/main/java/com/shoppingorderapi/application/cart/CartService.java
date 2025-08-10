@@ -1,5 +1,8 @@
 package com.shoppingorderapi.application.cart;
 
+import java.util.List;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -24,7 +27,7 @@ public class CartService {
 	private final CartItemRepository cartItemRepository;
 
 	@Transactional
-	public CreateCartResponseDto createCart(Long userId) {
+	public Cart createCart(Long userId) {
 		// 1. User 존재 여부 확인
 		User user = userRepository.findByIdOrElseThrow(userId);
 
@@ -39,11 +42,9 @@ public class CartService {
 		cartRepository.save(cart);
 
 		// 4. 반환
-		return CreateCartResponseDto.of(cart.getId());
+		return cart;
 	}
 
-	public void findCart() {
-		// Cart Item 추가 -> DTO 만든 후 다시 수정할 예정
 	@Transactional(readOnly = true)
 	public CartDetailResponseDto findCart(Long userId) {
 		// 1. UserId 에 맞는 카트 조회
