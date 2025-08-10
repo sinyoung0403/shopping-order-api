@@ -14,10 +14,10 @@ public interface CartRepository extends BaseRepository<Cart, Long> {
 
 	boolean existsByUser_Id(Long userId);
 
-	@Modifying
+	@Modifying(clearAutomatically = true, flushAutomatically = true)
 	@Query(
 		"DELETE FROM Cart c "
 			+ "WHERE c.user.id = :userId"
 	)
-	void deleteByUserId(@Param("userId") Long userId);
+	int deleteByUserId(@Param("userId") Long userId);
 }
