@@ -60,13 +60,12 @@ public class CartService {
 
 		// 4. 수량 합
 		int totalQuantity = itemList.stream()
-			.mapToInt(i -> Optional.ofNullable(i.getQuantity()).orElse(0))
+			.mapToInt(i -> i.getQuantity())
 			.sum();
 
 		// 5. 총 가격
 		int totalAmount = itemList.stream()
-			.mapToInt(i -> Optional.ofNullable(i.getPrice()).orElse(0)
-				* Optional.ofNullable(i.getQuantity()).orElse(0))
+			.mapToInt(i -> i.getPrice() * i.getQuantity())
 			.sum();
 
 		// 6. 반환
