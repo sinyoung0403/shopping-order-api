@@ -9,7 +9,9 @@ import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.cart.Cart;
 import com.shoppingorderapi.domain.cart.CartRepository;
-import com.shoppingorderapi.domain.cart.dto.CreateCartResponseDto;
+import com.shoppingorderapi.domain.cart.dto.response.CartDetailResponseDto;
+import com.shoppingorderapi.domain.cart.dto.response.CartItemResponseDto;
+import com.shoppingorderapi.domain.cartItem.CartItemRepository;
 import com.shoppingorderapi.domain.user.User;
 import com.shoppingorderapi.domain.user.UserRepository;
 
@@ -19,6 +21,7 @@ public class CartService {
 
 	private final UserRepository userRepository;
 	private final CartRepository cartRepository;
+	private final CartItemRepository cartItemRepository;
 
 	@Transactional
 	public CreateCartResponseDto createCart(Long userId) {
@@ -71,14 +74,9 @@ public class CartService {
 
 	@Transactional
 	public void deleteCart(Long userId) {
-		// 1. User 에 맞는 카트 확인
-		Cart cart = cartRepository.findByUser_Id(userId)
-			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND));
-
-		// 2. 아이템 먼저 삭제
-		// TODO: 추후 구현 예정
-
-		// 3. cart 삭제
-		cartRepository.delete(cart);
+		// 1. CartItem 먼저 삭제
+		cartItemRepository.deleteByUserId(userId);
+		// 2. Cart 삭제
+		cartRepository.deleteByUserId(userId);
 	}
 }

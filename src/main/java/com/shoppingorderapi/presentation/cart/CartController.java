@@ -29,7 +29,7 @@ public class CartController {
 			.body(BaseResponse.success(cartService.findCart(userId)));
 	}
 
-	@DeleteMapping("/cart")
+	@DeleteMapping("/me/carts")
 	public ResponseEntity<BaseResponse<Void>> deleteCart(
 		@RequestParam Long userId
 	) {
