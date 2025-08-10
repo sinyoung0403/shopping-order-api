@@ -1,5 +1,7 @@
 package com.shoppingorderapi.presentation.cartItem;
 
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
@@ -32,7 +34,7 @@ public class CartItemController {
 	@PostMapping("/items")
 	public ResponseEntity<BaseResponse<CreateCartItemResponseDto>> createCartItem(
 		@RequestParam Long userId,
-		@RequestBody CreateCartItemRequestDto dto
+		@Valid @RequestBody CreateCartItemRequestDto dto
 	) {
 		return ResponseEntity
 			.status(HttpStatus.CREATED)
@@ -53,7 +55,7 @@ public class CartItemController {
 	public ResponseEntity<BaseResponse<Void>> updateQuantity(
 		@RequestParam Long userId,
 		@PathVariable Long cartItemId,
-		@RequestBody UpdateQuantityRequestDto dto
+		@Valid @RequestBody UpdateQuantityRequestDto dto
 	) {
 		cartItemService.updateQuantity(userId, cartItemId, dto);
 		return ResponseEntity
