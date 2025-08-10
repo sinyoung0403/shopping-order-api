@@ -1,5 +1,6 @@
 package com.shoppingorderapi.domain.cartItem;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +35,7 @@ public class CartItem {
 	@JoinColumn(name = "cart_id", nullable = false)
 	private Cart cart;
 
+	@Column(nullable = false)
 	private int quantity;
 
 	@Builder
