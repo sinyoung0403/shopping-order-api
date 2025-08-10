@@ -35,10 +35,10 @@ public interface CartItemRepository extends BaseRepository<CartItem, Long> {
 
 	Optional<CartItem> findCartItemByIdAndCart_Id(Long cartItemId, Long cartId);
 
-	@Modifying
+	@Modifying(clearAutomatically = true, flushAutomatically = true)
 	@Query(
 		"DELETE FROM CartItem ci "
 			+ "WHERE ci.cart.user.id = :userId"
 	)
-	void deleteByUserId(@Param("userId") Long userId);
+	int deleteByUserId(@Param("userId") Long userId);
 }
