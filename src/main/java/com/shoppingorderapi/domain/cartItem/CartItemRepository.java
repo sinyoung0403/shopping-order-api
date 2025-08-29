@@ -35,6 +35,8 @@ public interface CartItemRepository extends BaseRepository<CartItem, Long> {
 
 	Optional<CartItem> findCartItemByIdAndCart_Id(Long cartItemId, Long cartId);
 
+	List<CartItem> findAllByCart_Id(Long cartId);
+	
 	@Modifying(clearAutomatically = true, flushAutomatically = true)
 	@Query(
 		"DELETE FROM CartItem ci "

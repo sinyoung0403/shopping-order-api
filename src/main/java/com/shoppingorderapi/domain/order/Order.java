@@ -1,6 +1,5 @@
 package com.shoppingorderapi.domain.order;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,5 +35,26 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
+	private int totalItemCount;
+
 	private int totalItemPrice;
+
+	@Builder
+	public Order(User user, OrderStatus status, int totalItemPrice) {
+		this.user = user;
+		this.status = status;
+		this.totalItemPrice = totalItemPrice;
+	}
+
+	public void updateTotalItemPrice(int totalItemPrice) {
+		this.totalItemPrice = totalItemPrice;
+	}
+
+	public void updateTotalItemCount(int totalItemCount) {
+		this.totalItemCount = totalItemCount;
+	}
+
+	public void cancel() {
+		this.status = OrderStatus.CANCELED;
+	}
 }
