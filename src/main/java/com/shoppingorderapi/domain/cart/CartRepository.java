@@ -12,6 +12,8 @@ public interface CartRepository extends BaseRepository<Cart, Long> {
 
 	Optional<Cart> findByUser_Id(Long userId);
 
+	Optional<Cart> findByIdAndUser_Id(Long cartId, Long userId);
+
 	boolean existsByUser_Id(Long userId);
 
 	@Modifying(clearAutomatically = true, flushAutomatically = true)
