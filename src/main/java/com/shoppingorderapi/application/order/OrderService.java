@@ -79,7 +79,7 @@ public class OrderService {
 		// 1. dto 에 맞는 유저와 장바구니 조회
 		User user = userRepository.findByIdOrElseThrow(dto.getUserId());
 		Cart cart = cartRepository.findByIdAndUser_Id(dto.getCartId(), dto.getUserId()).orElseThrow(
-			() -> new CustomException(ErrorCode.INVALID_INPUT)
+			() -> new CustomException(ErrorCode.NOT_FOUND)
 		);
 
 		// 2. 카트 속의 아이템을 리스트에 담기.

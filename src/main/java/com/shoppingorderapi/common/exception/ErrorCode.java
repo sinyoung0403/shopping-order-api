@@ -29,7 +29,7 @@ public enum ErrorCode {
 	 * Cart 관련
 	 */
 	DUPLICATE_CART("DUPLICATE_CART", "이미 장바구니가 존재합니다.", HttpStatus.CONFLICT),
-	CART_EMPTY("CART_EMPTY", "장바구니에 담긴 상품이 없습니다.", HttpStatus.NO_CONTENT),
+	CART_EMPTY("CART_EMPTY", "장바구니에 담긴 상품이 없습니다.", HttpStatus.BAD_REQUEST),
 
 	/**
 	 * 기타
