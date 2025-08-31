@@ -7,12 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
-import com.shoppingorderapi.domain.cartItem.dto.request.CreateCartItemRequestDto;
 import com.shoppingorderapi.domain.order.Order;
 import com.shoppingorderapi.domain.order.OrderRepository;
 import com.shoppingorderapi.domain.orderItem.OrderItem;
 import com.shoppingorderapi.domain.orderItem.OrderItemRepository;
-import com.shoppingorderapi.domain.orderItem.dto.response.CreateOrderItemResponseDto;
 import com.shoppingorderapi.domain.orderItem.dto.response.FindOrderItemResponseDto;
 import com.shoppingorderapi.domain.product.Product;
 import com.shoppingorderapi.domain.product.ProductRepository;
@@ -26,9 +24,9 @@ public class OrderItemService {
 	private final OrderItemRepository orderItemRepository;
 
 	@Transactional
-	public CreateOrderItemResponseDto orderItemCreate(Long userId, Long orderId, CreateCartItemRequestDto dto) {
+	public OrderItem orderItemCreate(Long orderId, Long productId, int quantity) {
 
-		Product product = productRepository.findByIdOrElseThrow(dto.getProductId());
+		Product product = productRepository.findByIdOrElseThrow(productId);
 
 		Order order = orderRepository.findByIdOrElseThrow(orderId);
 
@@ -37,13 +35,13 @@ public class OrderItemService {
 			.product(product)
 			.productNameSnapshot(product.getName())
 			.unitPriceSnapshot(product.getPrice())
-			.quantity(dto.getQuantity())
-			.lineTotal(product.getPrice() * dto.getQuantity())
+			.quantity(quantity)
+			.lineTotal(product.getPrice() * quantity)
 			.build();
 
 		orderItemRepository.save(orderItem);
 
-		return CreateOrderItemResponseDto.of(orderItem.getId());
+		return orderItem;
 	}
 
 	@Transactional

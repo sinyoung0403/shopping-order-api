@@ -15,6 +15,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import com.shoppingorderapi.domain.order.Order;
 import com.shoppingorderapi.domain.product.Product;
 
@@ -22,6 +25,8 @@ import com.shoppingorderapi.domain.product.Product;
 @Table(name = "order_items")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLDelete(sql = "UPDATE order_items SET is_deleted = true WHERE id = ?")
+@Where(clause = "is_deleted = false")
 public class OrderItem {
 
 	@Id
