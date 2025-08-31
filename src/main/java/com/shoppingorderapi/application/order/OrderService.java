@@ -99,18 +99,15 @@ public class OrderService {
 		orderRepository.save(order);
 
 		// 5. CartItem 을 Order Item 으로 변환
-		cartItemList.forEach(
-			n ->
-				orderItemService.orderItemCreate(order.getId(), n.getProduct().getId(), n.getQuantity())
-		);
+		List<OrderItem> orderItemList = cartItemList.stream().map(
+			n -> orderItemService.orderItemCreate(order.getId(), n.getProduct().getId(), n.getQuantity())
+		).toList();
 
 		// 6. CartItem 의 총 가격 및 총 개수 반영
 		order.updateTotalItemPrice(
-			cartItemList.stream()
-				.map(n -> n.getProduct().getPrice() * n.getQuantity())
-				.reduce(0, Integer::sum)
+			orderItemList.stream().mapToInt(OrderItem::getLineTotal).sum()
 		);
-		order.updateTotalItemCount(cartItemList.size());
+		order.updateTotalItemCount(orderItemList.size());
 
 		// 7. 장바구니 삭제
 		cartService.deleteCart(user.getId());
