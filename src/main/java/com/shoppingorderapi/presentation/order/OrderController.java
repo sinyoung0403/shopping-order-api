@@ -1,6 +1,7 @@
 package com.shoppingorderapi.presentation.order;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -68,7 +69,7 @@ public class OrderController {
 	public ResponseEntity<BaseResponse<Page<FindAllOrderResponseDto>>> findAllOrder(
 		@RequestParam Long userId,
 		@PositiveOrZero @RequestParam(defaultValue = "0") int page,
-		@Positive @RequestParam(defaultValue = "5") int size
+		@Positive @Max(100) @RequestParam(defaultValue = "5") int size
 	) {
 		return ResponseEntity.status(HttpStatus.OK)
 			.body(BaseResponse.success(orderService.findAllOrder(userId, page, size)));
