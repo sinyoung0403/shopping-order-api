@@ -1,5 +1,6 @@
 package com.shoppingorderapi.presentation.order;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -34,7 +35,7 @@ public class OrderController {
 	// 즉시구입
 	@PostMapping("/orders")
 	public ResponseEntity<BaseResponse<CreateInstantOrderResponseDto>> createInstantOrder(
-		@RequestBody CreateInstantOrderRequestDto dto
+		@Valid @RequestBody CreateInstantOrderRequestDto dto
 	) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(BaseResponse.success(orderService.createInstantOrder(dto)));
@@ -43,7 +44,7 @@ public class OrderController {
 	// 장바구니 구입
 	@PostMapping("/carts/orders")
 	public ResponseEntity<BaseResponse<CreateCartOrderResponseDto>> createCartOrder(
-		@RequestBody CreateCartOrderRequestDto dto
+		@Valid @RequestBody CreateCartOrderRequestDto dto
 	) {
 		return ResponseEntity.status(HttpStatus.CREATED)
 			.body(BaseResponse.success(orderService.createCartOrder(dto)));
