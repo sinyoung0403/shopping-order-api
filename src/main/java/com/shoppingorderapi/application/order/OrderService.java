@@ -16,25 +16,25 @@ import com.shoppingorderapi.application.orderItem.OrderItemService;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.cart.Cart;
-import com.shoppingorderapi.domain.cart.CartRepository;
+import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
 import com.shoppingorderapi.domain.cartItem.CartItem;
-import com.shoppingorderapi.domain.cartItem.CartItemRepository;
+import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
 import com.shoppingorderapi.domain.order.Order;
-import com.shoppingorderapi.domain.order.OrderRepository;
+import com.shoppingorderapi.infra.persistence.jpa.OrderRepository;
 import com.shoppingorderapi.domain.order.OrderStatus;
-import com.shoppingorderapi.domain.order.dto.request.CreateCartOrderRequestDto;
-import com.shoppingorderapi.domain.order.dto.request.CreateInstantOrderRequestDto;
-import com.shoppingorderapi.domain.order.dto.response.CreateCartOrderResponseDto;
-import com.shoppingorderapi.domain.order.dto.response.CreateInstantOrderResponseDto;
-import com.shoppingorderapi.domain.order.dto.response.FindAllOrderResponseDto;
-import com.shoppingorderapi.domain.order.dto.response.FindOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.request.CreateCartOrderRequestDto;
+import com.shoppingorderapi.presentation.dto.order.request.CreateInstantOrderRequestDto;
+import com.shoppingorderapi.presentation.dto.order.response.CreateCartOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.response.CreateInstantOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.response.FindAllOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.response.FindOrderResponseDto;
 import com.shoppingorderapi.domain.orderItem.OrderItem;
-import com.shoppingorderapi.domain.orderItem.OrderItemRepository;
-import com.shoppingorderapi.domain.orderItem.dto.response.OrderItemResponseDto;
+import com.shoppingorderapi.infra.persistence.jpa.OrderItemRepository;
+import com.shoppingorderapi.presentation.dto.orderItem.response.OrderItemResponseDto;
 import com.shoppingorderapi.domain.product.Product;
-import com.shoppingorderapi.domain.product.ProductRepository;
+import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
 import com.shoppingorderapi.domain.user.User;
-import com.shoppingorderapi.domain.user.UserRepository;
+import com.shoppingorderapi.infra.persistence.jpa.UserRepository;
 
 @Service
 @RequiredArgsConstructor

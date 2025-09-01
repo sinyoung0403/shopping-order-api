@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.orderItem.OrderItemService;
 import com.shoppingorderapi.common.response.BaseResponse;
-import com.shoppingorderapi.domain.orderItem.dto.response.FindOrderItemResponseDto;
+import com.shoppingorderapi.presentation.dto.orderItem.response.FindOrderItemResponseDto;
 
 @RestController
 @RequiredArgsConstructor

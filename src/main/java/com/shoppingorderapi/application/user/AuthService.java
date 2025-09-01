@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.user.User;
-import com.shoppingorderapi.domain.user.UserRepository;
-import com.shoppingorderapi.domain.user.dto.SignInRequestDto;
-import com.shoppingorderapi.domain.user.dto.SignUpRequestDto;
-import com.shoppingorderapi.domain.user.dto.SignUpResponseDto;
+import com.shoppingorderapi.infra.persistence.jpa.UserRepository;
+import com.shoppingorderapi.presentation.dto.user.request.SignInRequestDto;
+import com.shoppingorderapi.presentation.dto.user.request.SignUpRequestDto;
+import com.shoppingorderapi.presentation.dto.user.response.SignUpResponseDto;
 
 @Service
 @RequiredArgsConstructor

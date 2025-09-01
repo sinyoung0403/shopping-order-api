@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.user.AuthService;
 import com.shoppingorderapi.common.response.BaseResponse;
-import com.shoppingorderapi.domain.user.dto.SignInRequestDto;
-import com.shoppingorderapi.domain.user.dto.SignUpRequestDto;
-import com.shoppingorderapi.domain.user.dto.SignUpResponseDto;
+import com.shoppingorderapi.presentation.dto.user.request.SignInRequestDto;
+import com.shoppingorderapi.presentation.dto.user.request.SignUpRequestDto;
+import com.shoppingorderapi.presentation.dto.user.response.SignUpResponseDto;
 
 @RestController
 @RequiredArgsConstructor
