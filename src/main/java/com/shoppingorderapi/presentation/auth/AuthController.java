@@ -8,21 +8,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shoppingorderapi.application.user.AuthService;
+import com.shoppingorderapi.application.auth.AuthService;
 import com.shoppingorderapi.common.response.BaseResponse;
-import com.shoppingorderapi.presentation.dto.user.request.SignInRequestDto;
-import com.shoppingorderapi.presentation.dto.user.request.SignUpRequestDto;
-import com.shoppingorderapi.presentation.dto.user.response.SignUpResponseDto;
+import com.shoppingorderapi.presentation.dto.auth.request.SignInRequestDto;
+import com.shoppingorderapi.presentation.dto.auth.request.SignUpRequestDto;
+import com.shoppingorderapi.presentation.dto.auth.response.SignInResponseDto;
+import com.shoppingorderapi.presentation.dto.auth.response.SignUpResponseDto;
 
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
 	private final AuthService authService;
 
-	@PostMapping("/users/signup")
+	@PostMapping("/signup")
 	public ResponseEntity<BaseResponse<SignUpResponseDto>> signUpUser(
 		@Valid @RequestBody SignUpRequestDto signUpRequestDto
 	) {
@@ -31,12 +34,11 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<BaseResponse<Void>> login(
+	public ResponseEntity<BaseResponse<SignInResponseDto>> login(
 		@Valid @RequestBody SignInRequestDto signInRequestDto
 	) {
-		authService.signIn(signInRequestDto);
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(BaseResponse.success(null));
+			.body(BaseResponse.success(authService.signIn(signInRequestDto)));
 	}
 
 	@PostMapping("/logout")
