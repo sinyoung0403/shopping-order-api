@@ -21,13 +21,13 @@ public interface ProductRepository extends BaseRepository<Product, Long> {
 	boolean existsByName(String name);
 
 	@Query(
-		"SELECT new com.shoppingorderapi.domain.product.dto.response.FindProductResponseDto(p.name, p.price, p.stock, p.description, p.imageUrl, p.createdAt) "
+		"SELECT new com.shoppingorderapi.presentation.dto.product.response.FindProductResponseDto(p.name, p.price, p.stock, p.description, p.imageUrl, p.createdAt) "
 			+ "FROM Product p WHERE p.id = :productId"
 	)
 	FindProductResponseDto findProductWithId(@Param("productId") Long productId);
 
 	@Query(
-		"SELECT new com.shoppingorderapi.domain.product.dto.response.FindAllProductResponseDto(p.id, p.name, p.price, p.stock, p.imageUrl) "
+		"SELECT new com.shoppingorderapi.presentation.dto.product.response.FindAllProductResponseDto(p.id, p.name, p.price, p.stock, p.imageUrl) "
 			+ "FROM Product p "
 	)
 	Page<FindAllProductResponseDto> findAllProduct(Pageable pageable);

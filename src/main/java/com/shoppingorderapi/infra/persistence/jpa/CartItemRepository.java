@@ -15,7 +15,7 @@ import com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemRespo
 public interface CartItemRepository extends BaseRepository<CartItem, Long> {
 
 	@Query(
-		"SELECT new com.shoppingorderapi.domain.cartItem.dto.response.FindCartItemResponseDto(c.id, p.id, p.imageUrl, c.quantity, p.price) "
+		"SELECT new com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemResponseDto(c.id, p.id, p.imageUrl, c.quantity, p.price) "
 			+ "FROM CartItem c JOIN c.product p "
 			+ "WHERE c.id = :cartItemId "
 			+ "AND c.cart.user.id = :userId"
@@ -26,7 +26,7 @@ public interface CartItemRepository extends BaseRepository<CartItem, Long> {
 	);
 
 	@Query(
-		"SELECT new com.shoppingorderapi.domain.cart.dto.response.CartItemResponseDto(ci.id, p.id, p.name, p.imageUrl, ci.quantity, p.price) "
+		"SELECT new com.shoppingorderapi.presentation.dto.cart.response.CartItemResponseDto(ci.id, p.id, p.name, p.imageUrl, ci.quantity, p.price) "
 			+ "FROM CartItem ci JOIN ci.product p "
 			+ "WHERE ci.cart.id = :cartId"
 	)
