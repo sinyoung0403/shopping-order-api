@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.order.OrderService;
 import com.shoppingorderapi.common.response.BaseResponse;
-import com.shoppingorderapi.domain.order.dto.request.CreateCartOrderRequestDto;
-import com.shoppingorderapi.domain.order.dto.request.CreateInstantOrderRequestDto;
-import com.shoppingorderapi.domain.order.dto.response.CreateCartOrderResponseDto;
-import com.shoppingorderapi.domain.order.dto.response.CreateInstantOrderResponseDto;
-import com.shoppingorderapi.domain.order.dto.response.FindAllOrderResponseDto;
-import com.shoppingorderapi.domain.order.dto.response.FindOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.request.CreateCartOrderRequestDto;
+import com.shoppingorderapi.presentation.dto.order.request.CreateInstantOrderRequestDto;
+import com.shoppingorderapi.presentation.dto.order.response.CreateCartOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.response.CreateInstantOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.response.FindAllOrderResponseDto;
+import com.shoppingorderapi.presentation.dto.order.response.FindOrderResponseDto;
 
 @RestController
 @RequiredArgsConstructor

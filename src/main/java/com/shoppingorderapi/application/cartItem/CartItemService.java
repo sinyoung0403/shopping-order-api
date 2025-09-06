@@ -10,15 +10,15 @@ import com.shoppingorderapi.application.cart.CartService;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.cart.Cart;
-import com.shoppingorderapi.domain.cart.CartRepository;
+import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
 import com.shoppingorderapi.domain.cartItem.CartItem;
-import com.shoppingorderapi.domain.cartItem.CartItemRepository;
-import com.shoppingorderapi.domain.cartItem.dto.request.CreateCartItemRequestDto;
-import com.shoppingorderapi.domain.cartItem.dto.request.UpdateQuantityRequestDto;
-import com.shoppingorderapi.domain.cartItem.dto.response.CreateCartItemResponseDto;
-import com.shoppingorderapi.domain.cartItem.dto.response.FindCartItemResponseDto;
+import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
+import com.shoppingorderapi.presentation.dto.cartItem.request.CreateCartItemRequestDto;
+import com.shoppingorderapi.presentation.dto.cartItem.request.UpdateQuantityRequestDto;
+import com.shoppingorderapi.presentation.dto.cartItem.response.CreateCartItemResponseDto;
+import com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemResponseDto;
 import com.shoppingorderapi.domain.product.Product;
-import com.shoppingorderapi.domain.product.ProductRepository;
+import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
 
 @Service
 @RequiredArgsConstructor

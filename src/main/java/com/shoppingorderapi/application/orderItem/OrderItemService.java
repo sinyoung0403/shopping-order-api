@@ -8,12 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.order.Order;
-import com.shoppingorderapi.domain.order.OrderRepository;
+import com.shoppingorderapi.infra.persistence.jpa.OrderRepository;
 import com.shoppingorderapi.domain.orderItem.OrderItem;
-import com.shoppingorderapi.domain.orderItem.OrderItemRepository;
-import com.shoppingorderapi.domain.orderItem.dto.response.FindOrderItemResponseDto;
+import com.shoppingorderapi.infra.persistence.jpa.OrderItemRepository;
+import com.shoppingorderapi.presentation.dto.orderItem.response.FindOrderItemResponseDto;
 import com.shoppingorderapi.domain.product.Product;
-import com.shoppingorderapi.domain.product.ProductRepository;
+import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
 
 @Service
 @RequiredArgsConstructor

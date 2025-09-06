@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.cart.CartService;
 import com.shoppingorderapi.common.response.BaseResponse;
-import com.shoppingorderapi.domain.cart.dto.response.CartDetailResponseDto;
+import com.shoppingorderapi.presentation.dto.cart.response.CartDetailResponseDto;
 
 @RestController
 @RequiredArgsConstructor

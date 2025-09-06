@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.cartItem.CartItemService;
 import com.shoppingorderapi.common.response.BaseResponse;
-import com.shoppingorderapi.domain.cartItem.dto.request.CreateCartItemRequestDto;
-import com.shoppingorderapi.domain.cartItem.dto.request.UpdateQuantityRequestDto;
-import com.shoppingorderapi.domain.cartItem.dto.response.CreateCartItemResponseDto;
-import com.shoppingorderapi.domain.cartItem.dto.response.FindCartItemResponseDto;
+import com.shoppingorderapi.presentation.dto.cartItem.request.CreateCartItemRequestDto;
+import com.shoppingorderapi.presentation.dto.cartItem.request.UpdateQuantityRequestDto;
+import com.shoppingorderapi.presentation.dto.cartItem.response.CreateCartItemResponseDto;
+import com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemResponseDto;
 
 @RestController
 @RequiredArgsConstructor

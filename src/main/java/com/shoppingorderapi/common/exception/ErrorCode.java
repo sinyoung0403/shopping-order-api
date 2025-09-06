@@ -13,6 +13,7 @@ public enum ErrorCode {
 	UNAUTHORIZED("UNAUTHORIZED", "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED),
 	FORBIDDEN("FORBIDDEN", "권한이 없습니다.", HttpStatus.FORBIDDEN),
 	LOGIN_FAILED("LOGIN_FAILED", "로그인에 실패했습니다.", HttpStatus.UNAUTHORIZED),
+	TOKEN_INVALID("TOKEN_INVALID", "토근이 유효하지 않습니다.", HttpStatus.UNAUTHORIZED),
 
 	/**
 	 * 유저 관련

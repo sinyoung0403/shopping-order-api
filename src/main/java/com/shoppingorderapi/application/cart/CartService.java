@@ -1,7 +1,6 @@
 package com.shoppingorderapi.application.cart;
 
 import java.util.List;
-import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -11,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.cart.Cart;
-import com.shoppingorderapi.domain.cart.CartRepository;
-import com.shoppingorderapi.domain.cart.dto.response.CartDetailResponseDto;
-import com.shoppingorderapi.domain.cart.dto.response.CartItemResponseDto;
-import com.shoppingorderapi.domain.cartItem.CartItemRepository;
+import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
+import com.shoppingorderapi.presentation.dto.cart.response.CartDetailResponseDto;
+import com.shoppingorderapi.presentation.dto.cart.response.CartItemResponseDto;
+import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
 import com.shoppingorderapi.domain.user.User;
-import com.shoppingorderapi.domain.user.UserRepository;
+import com.shoppingorderapi.infra.persistence.jpa.UserRepository;
 
 @Service
 @RequiredArgsConstructor
