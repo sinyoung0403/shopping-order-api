@@ -42,8 +42,7 @@ public class JwtTokenProvider {
 		Date now = new Date();
 		Date expiryDate = new Date(now.getTime() + expirationMS);
 
-		return BEARER_PREFIX +
-			Jwts.builder()
+		return Jwts.builder()
 				.setSubject(String.valueOf(userId))
 				.claim("userId", userId)
 				.claim("email", email)
@@ -56,10 +55,21 @@ public class JwtTokenProvider {
 
 	// Token 추출
 	public Claims getClaims(String token) {
+		// 1) 토큰이 비어있지 않거나, token 문자열의 맨 앞 부분이 "Bearer "와 같나 확인
+		String raw = token != null && token.regionMatches(
+			true, // 대소문자 구문 X
+			0,  // Token 의 0번째 인덱스부터 비교
+			BEARER_PREFIX,  // 비교 대상 문자
+			0, // 비교 대상 문자의 0번째 인덱스부터 비교
+			BEARER_PREFIX.length()) // 비교 대상 문자열 길이 만큼 비교
+			? token.substring(BEARER_PREFIX.length()).trim()
+			: token;
+
+		// 2) raw 토큰 속에서 Claims 획득
 		return Jwts.parserBuilder()
 			.setSigningKey(key)
 			.build()
-			.parseClaimsJws(token)
+			.parseClaimsJws(raw)
 			.getBody();
 	}
 }
