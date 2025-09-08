@@ -37,7 +37,8 @@ public interface CartItemRepository extends BaseRepository<CartItem, Long> {
 	Optional<CartItem> findCartItemByIdAndCart_Id(Long cartItemId, Long cartId);
 
 	List<CartItem> findAllByCart_Id(Long cartId);
-	
+
+	// DML 쿼리 실행 시 영속성 컨텍스트와 DB 상태 불일치를 막기 위한 안전 장치
 	@Modifying(clearAutomatically = true, flushAutomatically = true)
 	@Query(
 		"DELETE FROM CartItem ci "
