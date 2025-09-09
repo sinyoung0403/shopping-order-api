@@ -7,30 +7,38 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.shoppingorderapi.application.cart.query.CartItemQueryDto;
+import com.shoppingorderapi.application.cartItem.query.FindCartItemQueryDto;
 import com.shoppingorderapi.common.repository.BaseRepository;
 import com.shoppingorderapi.domain.cartItem.CartItem;
-import com.shoppingorderapi.presentation.dto.cart.response.CartItemResponseDto;
-import com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemResponseDto;
 
 public interface CartItemRepository extends BaseRepository<CartItem, Long> {
 
-	@Query(
-		"SELECT new com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemResponseDto(c.id, p.id, p.imageUrl, c.quantity, p.price) "
-			+ "FROM CartItem c JOIN c.product p "
-			+ "WHERE c.id = :cartItemId "
-			+ "AND c.cart.user.id = :userId"
-	)
-	Optional<FindCartItemResponseDto> findCartItemDto(
+	@Query(""" 
+		SELECT new com.shoppingorderapi.application.cartItem.query.FindCartItemQueryDto(c.id, p.id, p.imageUrl, c.quantity, p.price) 
+		FROM CartItem c JOIN c.product p
+		WHERE c.id = :cartItemId
+		AND c.cart.user.id = :userId
+		""")
+	Optional<FindCartItemQueryDto> findCartItemDto(
 		@Param("cartItemId") Long cartItemId,
 		@Param("userId") Long userId
 	);
 
-	@Query(
-		"SELECT new com.shoppingorderapi.presentation.dto.cart.response.CartItemResponseDto(ci.id, p.id, p.name, p.imageUrl, ci.quantity, p.price) "
-			+ "FROM CartItem ci JOIN ci.product p "
-			+ "WHERE ci.cart.id = :cartId"
-	)
-	List<CartItemResponseDto> findCartItemListByCartIdDto(
+	@Query("""
+		    SELECT new com.shoppingorderapi.application.cart.query.CartItemQueryDto(
+		        ci.id,
+		        p.id,
+		        p.name,
+		        p.imageUrl,
+		        ci.quantity,
+		        p.price
+		    )
+		    FROM CartItem ci
+		    JOIN ci.product p
+		    WHERE ci.cart.id = :cartId
+		""")
+	List<CartItemQueryDto> findCartItemListByCartIdDto(
 		@Param("cartId") Long cartId
 	);
 
