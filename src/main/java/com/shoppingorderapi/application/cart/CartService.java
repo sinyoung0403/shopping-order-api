@@ -7,15 +7,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shoppingorderapi.application.cart.query.CartItemQueryDto;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.cart.Cart;
-import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
-import com.shoppingorderapi.presentation.dto.cart.response.CartDetailResponseDto;
-import com.shoppingorderapi.presentation.dto.cart.response.CartItemResponseDto;
-import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
 import com.shoppingorderapi.domain.user.User;
+import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
+import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
 import com.shoppingorderapi.infra.persistence.jpa.UserRepository;
+import com.shoppingorderapi.presentation.dto.cart.response.CartDetailResponseDto;
 
 @Service
 @RequiredArgsConstructor
@@ -52,19 +52,19 @@ public class CartService {
 		);
 
 		// 2. CartItem 가져오기
-		List<CartItemResponseDto> itemList = cartItemRepository.findCartItemListByCartIdDto(cart.getId());
+		List<CartItemQueryDto> itemList = cartItemRepository.findCartItemListByCartIdDto(cart.getId());
 
 		// 3. 아이템 개수
 		int itemCount = itemList.size();
 
 		// 4. 수량 합
 		int totalQuantity = itemList.stream()
-			.mapToInt(i -> i.getQuantity())
+			.mapToInt(i -> i.quantity())
 			.sum();
 
 		// 5. 총 가격
 		int totalAmount = itemList.stream()
-			.mapToInt(i -> i.getPrice() * i.getQuantity())
+			.mapToInt(i -> i.price() * i.quantity())
 			.sum();
 
 		// 6. 반환

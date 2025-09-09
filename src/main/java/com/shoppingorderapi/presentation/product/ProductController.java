@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.product.ProductService;
+import com.shoppingorderapi.application.product.query.FindAllProductQueryDto;
+import com.shoppingorderapi.application.product.query.FindProductQueryDto;
 import com.shoppingorderapi.common.response.BaseResponse;
 import com.shoppingorderapi.common.response.PageResponse;
 import com.shoppingorderapi.presentation.dto.product.request.CreateProductRequestDto;
 import com.shoppingorderapi.presentation.dto.product.request.UpdateProductRequestDto;
 import com.shoppingorderapi.presentation.dto.product.response.CreateProductResponseDto;
-import com.shoppingorderapi.presentation.dto.product.response.FindAllProductResponseDto;
-import com.shoppingorderapi.presentation.dto.product.response.FindProductResponseDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,7 +46,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/product/{productId}")
-	public ResponseEntity<BaseResponse<FindProductResponseDto>> findProduct(
+	public ResponseEntity<BaseResponse<FindProductQueryDto>> findProduct(
 		@PathVariable Long productId
 	) {
 		return ResponseEntity
@@ -55,7 +55,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/product")
-	public ResponseEntity<BaseResponse<PageResponse<FindAllProductResponseDto>>> findAllProduct(
+	public ResponseEntity<BaseResponse<PageResponse<FindAllProductQueryDto>>> findAllProduct(
 		@RequestParam(defaultValue = "0") int page,
 		@RequestParam(defaultValue = "5") int size
 	) {

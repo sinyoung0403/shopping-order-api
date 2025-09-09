@@ -12,29 +12,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingorderapi.application.cart.CartService;
+import com.shoppingorderapi.application.order.query.FindAllOrderQueryDto;
 import com.shoppingorderapi.application.orderItem.OrderItemService;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.cart.Cart;
-import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
 import com.shoppingorderapi.domain.cartItem.CartItem;
-import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
 import com.shoppingorderapi.domain.order.Order;
-import com.shoppingorderapi.infra.persistence.jpa.OrderRepository;
 import com.shoppingorderapi.domain.order.OrderStatus;
+import com.shoppingorderapi.domain.orderItem.OrderItem;
+import com.shoppingorderapi.domain.product.Product;
+import com.shoppingorderapi.domain.user.User;
+import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
+import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
+import com.shoppingorderapi.infra.persistence.jpa.OrderItemRepository;
+import com.shoppingorderapi.infra.persistence.jpa.OrderRepository;
+import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
+import com.shoppingorderapi.infra.persistence.jpa.UserRepository;
 import com.shoppingorderapi.presentation.dto.order.request.CreateCartOrderRequestDto;
 import com.shoppingorderapi.presentation.dto.order.request.CreateInstantOrderRequestDto;
 import com.shoppingorderapi.presentation.dto.order.response.CreateCartOrderResponseDto;
 import com.shoppingorderapi.presentation.dto.order.response.CreateInstantOrderResponseDto;
-import com.shoppingorderapi.presentation.dto.order.response.FindAllOrderResponseDto;
 import com.shoppingorderapi.presentation.dto.order.response.FindOrderResponseDto;
-import com.shoppingorderapi.domain.orderItem.OrderItem;
-import com.shoppingorderapi.infra.persistence.jpa.OrderItemRepository;
 import com.shoppingorderapi.presentation.dto.orderItem.response.OrderItemResponseDto;
-import com.shoppingorderapi.domain.product.Product;
-import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
-import com.shoppingorderapi.domain.user.User;
-import com.shoppingorderapi.infra.persistence.jpa.UserRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -136,7 +136,7 @@ public class OrderService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<FindAllOrderResponseDto> findAllOrder(Long userId, int page, int size) {
+	public Page<FindAllOrderQueryDto> findAllOrder(Long userId, int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("id")));
 		return orderRepository.findAllOrderByUserId(userId, pageable);
 	}

@@ -5,6 +5,8 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import com.shoppingorderapi.application.cart.query.CartItemQueryDto;
+
 @Getter
 @AllArgsConstructor
 public class CartDetailResponseDto {
@@ -32,10 +34,10 @@ public class CartDetailResponseDto {
 	/**
 	 * 장바구니에 담긴 상품들
 	 */
-	private List<CartItemResponseDto> items;
+	private List<CartItemQueryDto> items;
 
 	public static CartDetailResponseDto of(Long cartId, int itemCount, int totalQuantity, int totalAmount,
-		List<CartItemResponseDto> items) {
+		List<CartItemQueryDto> items) {
 		return new CartDetailResponseDto(cartId, itemCount, totalQuantity, totalAmount, items);
 	}
 }

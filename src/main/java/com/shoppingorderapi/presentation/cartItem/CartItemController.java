@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.cartItem.CartItemService;
+import com.shoppingorderapi.application.cartItem.query.FindCartItemQueryDto;
 import com.shoppingorderapi.common.response.BaseResponse;
 import com.shoppingorderapi.presentation.dto.cartItem.request.CreateCartItemRequestDto;
 import com.shoppingorderapi.presentation.dto.cartItem.request.UpdateQuantityRequestDto;
 import com.shoppingorderapi.presentation.dto.cartItem.response.CreateCartItemResponseDto;
-import com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemResponseDto;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,7 +42,7 @@ public class CartItemController {
 	}
 
 	@GetMapping("/items/{cartItemId}")
-	public ResponseEntity<BaseResponse<FindCartItemResponseDto>> getCartItem(
+	public ResponseEntity<BaseResponse<FindCartItemQueryDto>> getCartItem(
 		@RequestParam Long userId,
 		@PathVariable Long cartItemId
 	) {

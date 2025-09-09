@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.order.OrderService;
+import com.shoppingorderapi.application.order.query.FindAllOrderQueryDto;
 import com.shoppingorderapi.common.response.BaseResponse;
 import com.shoppingorderapi.presentation.dto.order.request.CreateCartOrderRequestDto;
 import com.shoppingorderapi.presentation.dto.order.request.CreateInstantOrderRequestDto;
 import com.shoppingorderapi.presentation.dto.order.response.CreateCartOrderResponseDto;
 import com.shoppingorderapi.presentation.dto.order.response.CreateInstantOrderResponseDto;
-import com.shoppingorderapi.presentation.dto.order.response.FindAllOrderResponseDto;
 import com.shoppingorderapi.presentation.dto.order.response.FindOrderResponseDto;
 
 @RestController
@@ -66,7 +66,7 @@ public class OrderController {
 
 	// 전체 주문 조회
 	@GetMapping("/orders")
-	public ResponseEntity<BaseResponse<Page<FindAllOrderResponseDto>>> findAllOrder(
+	public ResponseEntity<BaseResponse<Page<FindAllOrderQueryDto>>> findAllOrder(
 		@RequestParam Long userId,
 		@PositiveOrZero @RequestParam(defaultValue = "0") int page,
 		@Positive @Max(100) @RequestParam(defaultValue = "5") int size

@@ -7,18 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingorderapi.application.cart.CartService;
+import com.shoppingorderapi.application.cartItem.query.FindCartItemQueryDto;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.cart.Cart;
-import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
 import com.shoppingorderapi.domain.cartItem.CartItem;
+import com.shoppingorderapi.domain.product.Product;
 import com.shoppingorderapi.infra.persistence.jpa.CartItemRepository;
+import com.shoppingorderapi.infra.persistence.jpa.CartRepository;
+import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
 import com.shoppingorderapi.presentation.dto.cartItem.request.CreateCartItemRequestDto;
 import com.shoppingorderapi.presentation.dto.cartItem.request.UpdateQuantityRequestDto;
 import com.shoppingorderapi.presentation.dto.cartItem.response.CreateCartItemResponseDto;
-import com.shoppingorderapi.presentation.dto.cartItem.response.FindCartItemResponseDto;
-import com.shoppingorderapi.domain.product.Product;
-import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -61,7 +61,7 @@ public class CartItemService {
 	}
 
 	@Transactional(readOnly = true)
-	public FindCartItemResponseDto findCartItem(Long userId, Long cartItemId) {
+	public FindCartItemQueryDto findCartItem(Long userId, Long cartItemId) {
 		return cartItemRepository.findCartItemDto(cartItemId, userId).orElseThrow(
 			() -> new CustomException(ErrorCode.NOT_FOUND)
 		);
