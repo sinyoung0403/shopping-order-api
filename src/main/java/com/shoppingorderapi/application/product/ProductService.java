@@ -9,15 +9,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shoppingorderapi.application.product.query.FindAllProductQueryDto;
+import com.shoppingorderapi.application.product.query.FindProductQueryDto;
 import com.shoppingorderapi.common.exception.CustomException;
 import com.shoppingorderapi.common.exception.ErrorCode;
 import com.shoppingorderapi.domain.product.Product;
-import com.shoppingorderapi.domain.product.ProductRepository;
-import com.shoppingorderapi.domain.product.dto.request.CreateProductRequestDto;
-import com.shoppingorderapi.domain.product.dto.request.UpdateProductRequestDto;
-import com.shoppingorderapi.domain.product.dto.response.CreateProductResponseDto;
-import com.shoppingorderapi.domain.product.dto.response.FindAllProductResponseDto;
-import com.shoppingorderapi.domain.product.dto.response.FindProductResponseDto;
+import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
+import com.shoppingorderapi.presentation.dto.product.request.CreateProductRequestDto;
+import com.shoppingorderapi.presentation.dto.product.request.UpdateProductRequestDto;
+import com.shoppingorderapi.presentation.dto.product.response.CreateProductResponseDto;
 
 @Service
 @RequiredArgsConstructor
@@ -58,12 +58,12 @@ public class ProductService {
 	}
 
 	@Transactional(readOnly = true)
-	public FindProductResponseDto getProduct(Long productId) {
+	public FindProductQueryDto getProduct(Long productId) {
 		return productRepository.findProductWithId(productId);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<FindAllProductResponseDto> getAllProduct(int page, int size) {
+	public Page<FindAllProductQueryDto> getAllProduct(int page, int size) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.asc("createdAt")));
 		return productRepository.findAllProduct(pageable);
 	}
