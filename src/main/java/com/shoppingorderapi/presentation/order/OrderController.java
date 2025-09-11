@@ -27,6 +27,8 @@ import com.shoppingorderapi.presentation.dto.order.request.CreateInstantOrderReq
 import com.shoppingorderapi.presentation.dto.order.response.CreateCartOrderResponseDto;
 import com.shoppingorderapi.presentation.dto.order.response.CreateInstantOrderResponseDto;
 import com.shoppingorderapi.presentation.dto.order.response.FindOrderResponseDto;
+import com.shoppingorderapi.presentation.security.Auth;
+import com.shoppingorderapi.presentation.security.AuthUser;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,50 +40,51 @@ public class OrderController {
 	// 즉시구입
 	@PostMapping("/orders")
 	public ResponseEntity<BaseResponse<CreateInstantOrderResponseDto>> createInstantOrder(
+		@Auth AuthUser authUser,
 		@Valid @RequestBody CreateInstantOrderRequestDto dto
 	) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-			.body(BaseResponse.success(orderService.createInstantOrder(dto)));
+			.body(BaseResponse.success(orderService.createInstantOrder(authUser.userId(), dto)));
 	}
 
 	// 장바구니 구입
 	@PostMapping("/carts/orders")
 	public ResponseEntity<BaseResponse<CreateCartOrderResponseDto>> createCartOrder(
+		@Auth AuthUser authUser,
 		@Valid @RequestBody CreateCartOrderRequestDto dto
 	) {
 		return ResponseEntity.status(HttpStatus.CREATED)
-			.body(BaseResponse.success(orderService.createCartOrder(dto)));
+			.body(BaseResponse.success(orderService.createCartOrder(authUser.userId(), dto)));
 	}
 
 	// 단건 주문 조회
 	@GetMapping("/orders/{orderId}")
 	public ResponseEntity<BaseResponse<FindOrderResponseDto>> findOrder(
-		// TODO : 추후에 변경 예정
-		@RequestParam Long userId,
+		@Auth AuthUser authUser,
 		@PathVariable Long orderId
 	) {
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(BaseResponse.success(orderService.findOrder(userId, orderId)));
+			.body(BaseResponse.success(orderService.findOrder(authUser.userId(), orderId)));
 	}
 
 	// 전체 주문 조회
 	@GetMapping("/orders")
 	public ResponseEntity<BaseResponse<Page<FindAllOrderQueryDto>>> findAllOrder(
-		@RequestParam Long userId,
+		@Auth AuthUser authUser,
 		@PositiveOrZero @RequestParam(defaultValue = "0") int page,
 		@Positive @Max(100) @RequestParam(defaultValue = "5") int size
 	) {
 		return ResponseEntity.status(HttpStatus.OK)
-			.body(BaseResponse.success(orderService.findAllOrder(userId, page, size)));
+			.body(BaseResponse.success(orderService.findAllOrder(authUser.userId(), page, size)));
 	}
 
 	// 주문 취소
 	@DeleteMapping("/orders/{orderId}")
 	public ResponseEntity<BaseResponse<Void>> cancelOrder(
-		@RequestParam Long userId,
+		@Auth AuthUser authUser,
 		@PathVariable Long orderId
 	) {
-		orderService.cancelOrder(userId, orderId);
+		orderService.cancelOrder(authUser.userId(), orderId);
 		return ResponseEntity.status(HttpStatus.OK)
 			.body(BaseResponse.success(null));
 	}
