@@ -11,6 +11,4 @@ public class CreateCartOrderRequestDto {
 	@NotNull @Positive
 	private Long cartId;
 
-	@NotNull @Positive
-	private Long userId;
 }
