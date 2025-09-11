@@ -20,6 +20,7 @@ public enum ErrorCode {
 	 */
 	USER_NOT_FOUND("USER_NOT_FOUND", "존재하지 않는 사용자입니다.", HttpStatus.NOT_FOUND),
 	DUPLICATE_EMAIL("DUPLICATE_EMAIL", "이미 사용 중인 이메일입니다.", HttpStatus.CONFLICT),
+	ROLE_REQUIRED("ROLE_REQUIRED", "역할은 반드시 입력해야 합니다.", HttpStatus.BAD_REQUEST),
 
 	/**
 	 * Product 관련

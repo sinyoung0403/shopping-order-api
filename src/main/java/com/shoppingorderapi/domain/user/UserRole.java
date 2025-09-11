@@ -1,9 +1,19 @@
 package com.shoppingorderapi.domain.user;
 
-public enum	UserRole {
+import com.shoppingorderapi.common.exception.CustomException;
+import com.shoppingorderapi.common.exception.ErrorCode;
+
+public enum UserRole {
 	USER, OWNER;
 
 	public static UserRole of(String role) {
-		return UserRole.valueOf(role.toUpperCase());
+		if (role == null || role.isBlank()) {
+			throw new CustomException(ErrorCode.ROLE_REQUIRED);
+		}
+		String normalized = role.toUpperCase(java.util.Locale.ROOT);
+		if (normalized.startsWith("ROLE_")) {
+			normalized = normalized.substring(5);
+		}
+		return UserRole.valueOf(normalized);
 	}
 }
