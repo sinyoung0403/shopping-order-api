@@ -18,6 +18,7 @@ import com.shoppingorderapi.infra.persistence.jpa.ProductRepository;
 import com.shoppingorderapi.presentation.dto.product.request.CreateProductRequestDto;
 import com.shoppingorderapi.presentation.dto.product.request.UpdateProductRequestDto;
 import com.shoppingorderapi.presentation.dto.product.response.CreateProductResponseDto;
+import com.shoppingorderapi.presentation.security.OwnerOnly;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +32,7 @@ public class ProductService {
 	 * @param createProductRequest 상품 생성 요청 정보
 	 * @return 생성된 상품의 ID
 	 */
+	@OwnerOnly
 	@Transactional
 	public CreateProductResponseDto createProduct(CreateProductRequestDto createProductRequest) {
 		// 1. TODO: 유저 여부 확인 - OWNER 확인
@@ -68,6 +70,7 @@ public class ProductService {
 		return productRepository.findAllProduct(pageable);
 	}
 
+	@OwnerOnly
 	@Transactional
 	public void updateProduct(Long productId, UpdateProductRequestDto updateProductRequestDto) {
 		// 1. Entity 조회
@@ -98,6 +101,7 @@ public class ProductService {
 		}
 	}
 
+	@OwnerOnly
 	@Transactional
 	public void deleteProduct(Long productId) {
 		// 1. Entity 조회

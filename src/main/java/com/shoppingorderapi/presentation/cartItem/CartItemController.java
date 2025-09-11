@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shoppingorderapi.application.cartItem.CartItemService;
@@ -22,6 +21,8 @@ import com.shoppingorderapi.common.response.BaseResponse;
 import com.shoppingorderapi.presentation.dto.cartItem.request.CreateCartItemRequestDto;
 import com.shoppingorderapi.presentation.dto.cartItem.request.UpdateQuantityRequestDto;
 import com.shoppingorderapi.presentation.dto.cartItem.response.CreateCartItemResponseDto;
+import com.shoppingorderapi.presentation.security.Auth;
+import com.shoppingorderapi.presentation.security.AuthUser;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,34 +31,33 @@ public class CartItemController {
 
 	private final CartItemService cartItemService;
 
-	// TODO: 추후 userId 를 Param 이 아닌, 토큰 속에서 값을 가져올 것이다.
 	@PostMapping("/items")
 	public ResponseEntity<BaseResponse<CreateCartItemResponseDto>> createCartItem(
-		@RequestParam Long userId,
+		@Auth AuthUser authUser,
 		@Valid @RequestBody CreateCartItemRequestDto dto
 	) {
 		return ResponseEntity
 			.status(HttpStatus.CREATED)
-			.body(BaseResponse.success(cartItemService.createCartItem(userId, dto)));
+			.body(BaseResponse.success(cartItemService.createCartItem(authUser.userId(), dto)));
 	}
 
 	@GetMapping("/items/{cartItemId}")
 	public ResponseEntity<BaseResponse<FindCartItemQueryDto>> getCartItem(
-		@RequestParam Long userId,
+		@Auth AuthUser authUser,
 		@PathVariable Long cartItemId
 	) {
 		return ResponseEntity
 			.status(HttpStatus.OK)
-			.body(BaseResponse.success(cartItemService.findCartItem(userId, cartItemId)));
+			.body(BaseResponse.success(cartItemService.findCartItem(authUser.userId(), cartItemId)));
 	}
 
 	@PatchMapping("/items/{cartItemId}")
 	public ResponseEntity<BaseResponse<Void>> updateQuantity(
-		@RequestParam Long userId,
+		@Auth AuthUser authUser,
 		@PathVariable Long cartItemId,
 		@Valid @RequestBody UpdateQuantityRequestDto dto
 	) {
-		cartItemService.updateQuantity(userId, cartItemId, dto);
+		cartItemService.updateQuantity(authUser.userId(), cartItemId, dto);
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(BaseResponse.success(null));
@@ -65,10 +65,10 @@ public class CartItemController {
 
 	@DeleteMapping("/items/{cartItemId}")
 	public ResponseEntity<BaseResponse<Void>> deleteCartItem(
-		@RequestParam Long userId,
+		@Auth AuthUser authUser,
 		@PathVariable Long cartItemId
 	) {
-		cartItemService.deleteCartItem(userId, cartItemId);
+		cartItemService.deleteCartItem(authUser.userId(), cartItemId);
 		return ResponseEntity
 			.status(HttpStatus.OK)
 			.body(BaseResponse.success(null));

@@ -50,10 +50,10 @@ public class OrderService {
 	private final CartService cartService;
 
 	@Transactional
-	public CreateInstantOrderResponseDto createInstantOrder(CreateInstantOrderRequestDto dto) {
+	public CreateInstantOrderResponseDto createInstantOrder(Long userId, CreateInstantOrderRequestDto dto) {
 
 		// 1. 유저 및 상품 조회
-		User user = userRepository.findByIdOrElseThrow(dto.getUserId());
+		User user = userRepository.findByIdOrElseThrow(userId);
 		Product product = productRepository.findByIdOrElseThrow(dto.getProductId());
 
 		// 2. 주문 생성
@@ -74,11 +74,11 @@ public class OrderService {
 	}
 
 	@Transactional
-	public CreateCartOrderResponseDto createCartOrder(CreateCartOrderRequestDto dto) {
+	public CreateCartOrderResponseDto createCartOrder(Long userId, CreateCartOrderRequestDto dto) {
 
 		// 1. dto 에 맞는 유저와 장바구니 조회
-		User user = userRepository.findByIdOrElseThrow(dto.getUserId());
-		Cart cart = cartRepository.findByIdAndUser_Id(dto.getCartId(), dto.getUserId()).orElseThrow(
+		User user = userRepository.findByIdOrElseThrow(userId);
+		Cart cart = cartRepository.findByIdAndUser_Id(dto.getCartId(), userId).orElseThrow(
 			() -> new CustomException(ErrorCode.NOT_FOUND)
 		);
 

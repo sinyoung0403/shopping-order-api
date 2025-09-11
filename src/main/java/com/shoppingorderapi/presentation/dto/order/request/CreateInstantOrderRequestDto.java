@@ -10,12 +10,12 @@ import lombok.Getter;
 @Getter
 public class CreateInstantOrderRequestDto {
 
-	@NotNull @Positive
-	private Long userId;
-
-	@NotNull @Positive
+	@NotNull
+	@Positive
 	private Long productId;
 
-	@Min(1) @Max(100)
+	@Min(1)
+	@Max(100)
 	private int quantity;
+
 }
