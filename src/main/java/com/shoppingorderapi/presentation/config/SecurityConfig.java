@@ -1,9 +1,10 @@
-package com.shoppingorderapi.presentation.security;
+package com.shoppingorderapi.presentation.config;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -12,14 +13,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.shoppingorderapi.presentation.security.JwtFilter;
+
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
 	private final JwtFilter jwtFilter;
 
-	// Chain Filter Bean 등록
+	/**
+	 * Chain Filter Bean 등록
+	 *
+	 * @param httpSecurity
+	 * @return SecurityFilterChain
+	 */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf(csrf -> csrf.disable())
@@ -46,7 +55,11 @@ public class SecurityConfig {
 		return httpSecurity.build();
 	}
 
-	// Password Encoder Bean 등록
+	/**
+	 * Password Encoder Bean 등록
+	 *
+	 * @return PasswordEncoder
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
