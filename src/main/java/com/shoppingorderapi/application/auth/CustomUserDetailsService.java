@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		// 2) 권한 매핑
 		Collection<? extends GrantedAuthority> authorities =
-			List.of(new SimpleGrantedAuthority(user.getRole().name()));
+			List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
 
 		// 3) CustomUserDetails 생성
 		return CustomUserDetails.of(user.getId(), email, authorities);
