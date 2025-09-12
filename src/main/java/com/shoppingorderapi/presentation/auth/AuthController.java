@@ -1,5 +1,6 @@
 package com.shoppingorderapi.presentation.auth;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,8 @@ public class AuthController {
 	}
 
 	@PostMapping("/logout")
-	public ResponseEntity<BaseResponse<Void>> logout() {
-		// TODO: 로그아웃 로직 구현 필요
+	public ResponseEntity<BaseResponse<Void>> logout(HttpServletRequest httpServletRequest) {
+		authService.logout(httpServletRequest);
 		return ResponseEntity.status(HttpStatus.OK)
 			.body(BaseResponse.success(null));
 	}
