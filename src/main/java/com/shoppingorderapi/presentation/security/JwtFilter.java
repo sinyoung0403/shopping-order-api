@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 	private final JwtTokenProvider jwtTokenProvider;
 	private final JwtTokenResolver jwtTokenResolver;
+	private final RedisTemplate redisTemplate;
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
@@ -47,19 +49,32 @@ public class JwtFilter extends OncePerRequestFilter {
 		FilterChain filterChain) throws
 		ServletException, IOException {
 
+		// 1) token 추출
 		String token = jwtTokenResolver.resolve(request).orElse(null);
 
+		// 2) Token 없을 시, 필터 통과
 		if (token == null) {
 			filterChain.doFilter(request, response);
 			return;
 		}
 
 		try {
+			// 3) Claims 추출 (검증실패는 예외발생)
 			Claims claims = jwtTokenProvider.getClaims(token);
+
+			// 4) 블랙리스트 확인
+			if (isTokenBlacklisted(token)) {
+				sendErrorResponse(response, ErrorCode.TOKEN_BLACKLISTED);
+				return;
+			}
+
+			// 5) 인증 객체 세팅 후 체인 진행
 			Authentication auth = buildAuthentication(claims);
 			SecurityContextHolder.getContext().setAuthentication(auth);
 			filterChain.doFilter(request, response);
+
 		} catch (JwtException e) {
+			// 6) 검증 실패 시 에러 응답 후 종료
 			sendErrorResponse(response, ErrorCode.TOKEN_INVALID);
 			return;
 		}
@@ -88,15 +103,15 @@ public class JwtFilter extends OncePerRequestFilter {
 		return new UsernamePasswordAuthenticationToken(principal, null, authorities);
 	}
 
-	// /**
-	//  * AccessToken 이 Blacklist 에 있는지 검증
-	//  *
-	//  * @param accessToken
-	//  * @return boolean
-	//  */
-	// private boolean isTokenBlacklisted(String accessToken) {
-	// 	return redisTemplate.hasKey("blacklist:" + accessToken);
-	// }
+	/**
+	 * AccessToken 이 Blacklist 에 있는지 검증
+	 *
+	 * @param accessToken
+	 * @return boolean
+	 */
+	private boolean isTokenBlacklisted(String accessToken) {
+		return redisTemplate.hasKey("bl:" + accessToken);
+	}
 
 	/**
 	 * Filter Error
@@ -107,13 +122,9 @@ public class JwtFilter extends OncePerRequestFilter {
 		response.setCharacterEncoding("UTF-8");
 
 		String jsonErrorResponse = "{"
-			+ "\"data\": null,"
-			+ "\"result\": {"
-			+ "\"status\": " + errorCode.getStatus().value() + ","
-			+ "\"code\": \"" + errorCode.getCode() + "\","
+			+ "\"success\": false,"
 			+ "\"message\": \"" + errorCode.getMessage() + "\","
-			+ "\"timestamp\": \"" + LocalDateTime.now() + "\""
-			+ "}"
+			+ "\"code\": \"" + errorCode.getCode() + "\""
 			+ "}";
 
 		response.getWriter().write(jsonErrorResponse);

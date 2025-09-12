@@ -13,6 +13,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  data:
+    redis:
+      host: localhost
+      port: 6379
 jwt:
   secret:
     key: f93h4ns0akjdhf9823hfsd8fh38hfs9sdhdsaw32fghf83sdf=

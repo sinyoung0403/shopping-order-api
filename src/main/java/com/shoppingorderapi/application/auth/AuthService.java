@@ -1,7 +1,14 @@
 package com.shoppingorderapi.application.auth;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +22,9 @@ import com.shoppingorderapi.presentation.dto.auth.request.SignInRequestDto;
 import com.shoppingorderapi.presentation.dto.auth.request.SignUpRequestDto;
 import com.shoppingorderapi.presentation.dto.auth.response.SignInResponseDto;
 import com.shoppingorderapi.presentation.dto.auth.response.SignUpResponseDto;
+import com.shoppingorderapi.presentation.security.JwtTokenResolver;
+
+import io.jsonwebtoken.Claims;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +33,8 @@ public class AuthService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final JwtTokenResolver jwtTokenResolver;
+	private final RedisTemplate redisTemplate;
 
 	@Transactional
 	public SignUpResponseDto signUpUser(
@@ -75,14 +87,28 @@ public class AuthService {
 
 		// TODO: 4) Refresh Token 저장
 
-
 		// 5) DTO 반환
 		return SignInResponseDto.of(accessToken, refreshToken);
 	}
 
 	@Transactional
-	public void signOut() {
-		// todo: 블랙 리스트 로직 구현 예정
+	public void logout(HttpServletRequest httpServletRequest) {
+		// 1) HttpRequest 에서 Jwt 를 가져온다.
+		String jwt = jwtTokenResolver.resolve(httpServletRequest).orElseThrow(
+			() -> new CustomException(ErrorCode.UNAUTHORIZED)
+		);
+
+		// 2) 토큰 속의 Claims 을 가져온다.
+		Claims claims = jwtTokenProvider.getClaims(jwt);
+
+		// 3) Cliams 속의 Duration 을 가져와 토큰의 만료시간을 구한다.
+		Duration expiredDuration = Duration.between(Instant.now(), claims.getExpiration().toInstant());
+
+		// 4) 최소 TTL 보장
+		long ttlSeconds = Math.max(1, expiredDuration.getSeconds()); // 최소 1초 보장
+
+		// 5) Redis 에 저장하기
+		redisTemplate.opsForValue().set("bl:" + jwt, "logout", ttlSeconds, TimeUnit.SECONDS);
 	}
 
 	@Transactional
