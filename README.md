@@ -86,6 +86,7 @@ src/main/java/com/shoppingorderapi/
 
 ## 🏷️ ERD
 
-![alt text](image.png)
+<img width="935" height="664" alt="image" src="https://github.com/user-attachments/assets/867c13f6-bda4-46fd-aa9a-993ae65c0d67" />
+
 
 ## API 문서 링크
