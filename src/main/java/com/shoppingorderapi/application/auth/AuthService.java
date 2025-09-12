@@ -104,8 +104,11 @@ public class AuthService {
 		// 3) Cliams 속의 Duration 을 가져와 토큰의 만료시간을 구한다.
 		Duration expiredDuration = Duration.between(Instant.now(), claims.getExpiration().toInstant());
 
-		// 4) Redis 에 저장하기
-		redisTemplate.opsForValue().set("bl:" + jwt, "logout", expiredDuration.getSeconds(), TimeUnit.SECONDS);
+		// 4) 최소 TTL 보장
+		long ttlSeconds = Math.max(1, expiredDuration.getSeconds()); // 최소 1초 보장
+
+		// 5) Redis 에 저장하기
+		redisTemplate.opsForValue().set("bl:" + jwt, "logout", ttlSeconds, TimeUnit.SECONDS);
 	}
 
 	@Transactional
