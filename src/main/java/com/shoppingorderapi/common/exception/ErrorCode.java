@@ -10,10 +10,12 @@ public enum ErrorCode {
 	/**
 	 * 인증/인가 관련
 	 */
-	UNAUTHORIZED("UNAUTHORIZED", "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED),
+	UNAUTHORIZED("UNAUTHORIZED", "인증 정보가 유효하지 않습니다.", HttpStatus.UNAUTHORIZED),
+	LOGIN_REQUIRED("LOGIN_REQUIRED", "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED),
 	FORBIDDEN("FORBIDDEN", "권한이 없습니다.", HttpStatus.FORBIDDEN),
 	LOGIN_FAILED("LOGIN_FAILED", "로그인에 실패했습니다.", HttpStatus.UNAUTHORIZED),
 	TOKEN_INVALID("TOKEN_INVALID", "토큰이 유효하지 않습니다.", HttpStatus.UNAUTHORIZED),
+	TOKEN_BLACKLISTED("TOKEN_BLACKLISTED", "로그아웃된 토큰입니다.", HttpStatus.UNAUTHORIZED),
 
 	/**
 	 * 유저 관련
